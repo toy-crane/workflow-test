@@ -9,9 +9,15 @@ on:
         required: true
 
 jobs:
-  print-tag:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ inputs.print_tags }}
+
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+
       - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }}
+        run: echo The tags are ${{ inputs.ref }}
