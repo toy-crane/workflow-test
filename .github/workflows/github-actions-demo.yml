@@ -22,6 +22,5 @@ jobs:
 
       - name: echo args
         run: echo "${{github.event.inputs.branch}}"
-
       - name: echo all files
         run: ls -al
