@@ -24,4 +24,4 @@ jobs:
           ref: ${{ inputs.ref }}
 
       - name: echo args
-        run: echo "${{github.event.inputs}}"
+        run: echo "${{github.event.inputs.branch}}"
