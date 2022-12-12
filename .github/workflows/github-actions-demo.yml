@@ -7,6 +7,10 @@ on:
         description: "Environment to run tests against"
         type: environment
         required: true
+      branch:
+        description: "checkout branch"
+        type: branch
+        required: true
 
 jobs:
   deploy:
