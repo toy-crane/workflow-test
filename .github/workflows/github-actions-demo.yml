@@ -3,9 +3,9 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: "Environment to run tests against"
-        type: environment
+      branch:
+        description: "checkout branch"
+        type: branch
         required: true
 
 jobs:
@@ -17,10 +17,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ inputs.branch }}
 
       - name: echo args
-        run: echo "${{github.event.inputs.ref}}"
+        run: echo "${{github.event.inputs.branch}}"
 
       - name: echo all files
         run: ls -al
