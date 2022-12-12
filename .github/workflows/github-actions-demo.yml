@@ -23,8 +23,5 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
-      - name: Print the input tag to STDOUT
-        run: echo "${{GITHUB_CONTEXT}}"
-
       - name: echo args
         run: echo "${{github.event.inputs}}"
