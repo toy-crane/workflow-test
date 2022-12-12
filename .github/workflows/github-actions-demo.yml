@@ -5,6 +5,7 @@ on:
     inputs:
       branch:
         description: "checkout branch"
+        default: "main"
         type: branch
         required: true
 
