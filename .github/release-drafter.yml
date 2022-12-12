@@ -35,3 +35,5 @@ template: |
   ## What’s Changed
 
   $CHANGES
+
+publish: true
