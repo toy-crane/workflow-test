@@ -1,7 +1,8 @@
 name: Release Drafter
 
+# 다른 워크 플로우에서 부를 수 있도록 추가
 on:
-  push: workflow_call
+  workflow_call:
 
 permissions:
   contents: read
