@@ -27,7 +27,6 @@ jobs:
           fetch-depth: 2
 
       - name: Publish Release Notes
-        if: steps.check-version.outputs.tag
         # We can switch to a tagged version once 5.8 is published
         uses: release-drafter/release-drafter@v5
         with:
