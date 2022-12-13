@@ -11,11 +11,10 @@ permissions:
 
 jobs:
   release:
-    name: Deploy
     runs-on: ubuntu-latest
     - name: echo args
       run: echo "release"
-  create-tag:
+  create-release-note:
     needs: release
     if: success()
-    uses: ./.github/workflows/create-release.yml
+    uses: ./.github/workflows/create-release-note.yml
