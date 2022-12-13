@@ -11,9 +11,11 @@ permissions:
 
 jobs:
   release:
+    name: deploy to S3
     runs-on: ubuntu-latest
-    - name: echo args
-      run: echo "release"
+    step:
+      - name: echo args
+        run: echo "release"
   create-release-note:
     needs: release
     if: success()
