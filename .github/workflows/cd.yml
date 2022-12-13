@@ -11,6 +11,7 @@ permissions:
   pull-requests: write
 
 jobs:
+  runs-on: ubuntu-latest
   create-tag:
     name: get New Tag from branch
     steps:
