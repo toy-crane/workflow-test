@@ -11,6 +11,18 @@ permissions:
   pull-requests: write
 
 jobs:
+  create-tag:
+    name: get New Tag from branch
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: 버전 정보 추출
+        run: echo "##[set-output name=version;]$(echo '${{ github.event.head_commit.message }}' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
+        id: extract_version_name
+  vaildate-tag:
+    uses: ./.github/workflows/validate-tag.yml
+    with:
+      tag_name: ${{ create-tag.steps.extract_version_name.outputs.version }}
   release:
     name: deploy to S3
     runs-on: ubuntu-latest

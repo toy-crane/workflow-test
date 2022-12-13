@@ -1,0 +1,31 @@
+name: Release Drafter
+
+# 다른 워크 플로우에서 부를 수 있도록 추가
+on:
+  workflow_call:
+    inputs:
+      tag_name:
+        required: true
+        type: string
+
+jobs:
+  vailidate-tag:
+    name: validate Tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - uses: bbonkr/git-tag-check-action@v1.0.5
+        id: git_tag_check
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ inputs.tag_name }}
+      - name: logging found
+        if: ${{ steps.git_tag_check.outputs.tag != '' }}
+        run: |
+          echo "Found tag=${{ steps.git_tag_check.outputs.tag }}"
+      - name: logging not found
+        if: ${{ steps.git_tag_check.outputs.tag == '' }}
+        run: |
+          echo "Tag does not exist"
