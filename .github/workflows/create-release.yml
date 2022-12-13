@@ -20,21 +20,12 @@ jobs:
           # Detect and Tag New Version을 위해 필요
           fetch-depth: 2
 
-      - name: Check for Version Change
-        id: check-version
-        uses: salsify/action-detect-and-tag-new-version@v1
-
-      - name: Publish New Package Version
-        if: steps.check-version.outputs.tag
-        run: |
-          # Publishes the package to our internal registry
-
       - name: Publish Release Notes
         if: steps.check-version.outputs.tag
         # We can switch to a tagged version once 5.8 is published
         uses: release-drafter/release-drafter@v5
         with:
           publish: true
-          tag: ${{ steps.check-version.outputs.tag }}
+          tag: "1.1.1"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
