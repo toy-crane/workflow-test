@@ -17,7 +17,5 @@ jobs:
     steps:
       - name: echo args
         run: echo "release"
-  create-release-note:
-    needs: release
-    if: success()
-    uses: ./.github/workflows/create-release-note.yml
+      - name: create-release-note
+        uses: ./.github/workflows/create-release-note.yml
