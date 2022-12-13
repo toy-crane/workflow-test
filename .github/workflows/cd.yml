@@ -13,7 +13,7 @@ jobs:
   release:
     name: deploy to S3
     runs-on: ubuntu-latest
-    step:
+    steps:
       - name: echo args
         run: echo "release"
   create-release-note:
