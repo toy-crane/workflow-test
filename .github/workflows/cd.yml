@@ -19,4 +19,10 @@ jobs:
   create-release-note:
     needs: release
     if: success()
+    permissions:
+      # write permission is required to create a github release
+      contents: write
+      # write permission is required for autolabeler
+      # otherwise, read permission is required at least
+      pull-requests: write
     uses: ./.github/workflows/create-release-note.yml
