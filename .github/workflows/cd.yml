@@ -11,9 +11,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  runs-on: ubuntu-latest
   create-tag:
     name: get New Tag from branch
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
