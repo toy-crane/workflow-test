@@ -9,14 +9,8 @@ permissions:
 
 jobs:
   release:
-    name: Check and Release New Version
+    name: Publish Release Notes
     runs-on: ubuntu-latest
-    permissions:
-      # write permission is required to create a github release
-      contents: write
-      # write permission is required for autolabeler
-      # otherwise, read permission is required at least
-      pull-requests: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
