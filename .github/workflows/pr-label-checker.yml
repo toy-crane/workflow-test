@@ -3,10 +3,10 @@ on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize]
 jobs:
-  label:
+  check-release-label:
+    run_if:
+      if: startsWith(github.head_ref, 'releases/')
     runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.check-labels.outputs.status }}
     steps:
       - id: check-labels
         uses: mheap/github-action-required-labels@v2
@@ -16,4 +16,17 @@ jobs:
           mode: exactly
           count: 1
           labels: "patch, minor, major"
+          add_comment: true
+    run_if:
+      if: startsWith(github.head_ref, 'releases/') === false
+    runs-on: ubuntu-latest
+    steps:
+      - id: check-labels
+        uses: mheap/github-action-required-labels@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: exactly
+          count: 1
+          labels: "feature, chore, bugfix"
           add_comment: true
