@@ -29,11 +29,7 @@ jobs:
       - name: logging found
         if: ${{ steps.git_tag_check.outputs.tag != '' }}
         run: |
-          echo "Found tag=${{ steps.git_tag_check.outputs.tag }}"
-      - name: logging not found
-        if: ${{ steps.git_tag_check.outputs.tag == '' }}
-        run: |
-          echo "Tag does not exist"
+          echo "::error ${{ steps.git_tag_check.outputs.tag }} is already exists"
   release:
     name: deploy to S3
     runs-on: ubuntu-latest
