@@ -17,7 +17,7 @@ jobs:
           labels: "patch, minor, major"
           add_comment: true
   check-branch-label:
-    if: startsWith(github.head_ref, 'releases/') === false
+    if: !startsWith(github.head_ref , 'releases/')
     runs-on: ubuntu-latest
     steps:
       - id: check-labels
