@@ -18,7 +18,7 @@ jobs:
       - name: echo args
         run: echo "release"
   create-release-note:
-    needs: [create-tag, release]
+    needs: release
     runs-on: ubuntu-latest
     if: success()
     steps:
@@ -26,6 +26,5 @@ jobs:
         uses: release-drafter/release-drafter@v5
         with:
           publish: true
-          tag: ${{ env.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
