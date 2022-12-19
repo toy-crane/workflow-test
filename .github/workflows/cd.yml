@@ -29,7 +29,7 @@ jobs:
       - name: logging found
         if: ${{ steps.git_tag_check.outputs.tag != '' }}
         run: |
-          echo "::error ${{ steps.git_tag_check.outputs.tag }} is already exists"
+          echo "::error title="tag already exists":: ${{ steps.git_tag_check.outputs.tag }} tag already exists"
           exit 1
   release:
     name: deploy to S3
