@@ -30,5 +30,4 @@ version-resolver:
 
 template: |
   ## What’s Changed
-
   $CHANGES
