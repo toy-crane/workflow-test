@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: 버전 정보 추출
-        run: echo "tag=$(echo '${{ github.event.head_commit.message }}' | egrep -o 'v[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')" >> $GITHUB_ENV
+        run: echo "tag=$v(echo '${{ github.event.head_commit.message }}' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')" >> $GITHUB_ENV
         id: extract_version_name
       - name: validate-tag
         uses: bbonkr/git-tag-check-action@v1.0.5
