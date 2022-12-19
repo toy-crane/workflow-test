@@ -12,7 +12,6 @@ permissions:
 jobs:
   release:
     name: deploy to S3
-    needs: create-tag
     runs-on: ubuntu-latest
     steps:
       - name: echo args
