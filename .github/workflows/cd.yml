@@ -23,7 +23,7 @@ jobs:
       - name: validate-tag
         uses: ./.github/workflows/validate-tag.yml
         with:
-          tag_name: ${{ create-tag.steps.extract_version_name.outputs.version }}
+          tag_name: ${{ steps.extract_version_name.outputs.version }}
   release:
     name: deploy to S3
     runs-on: ubuntu-latest
