@@ -32,12 +32,13 @@ jobs:
           echo "::error ${{ steps.git_tag_check.outputs.tag }} is already exists"
   release:
     name: deploy to S3
+    needs: create-tag
     runs-on: ubuntu-latest
     steps:
       - name: echo args
         run: echo "release"
   create-release-note:
-    needs: release
+    needs: [create-tag, release]
     if: success()
     steps:
       - name: Publish Release Notes
@@ -45,6 +46,6 @@ jobs:
         uses: release-drafter/release-drafter@v5
         with:
           publish: true
-          tag: ${{ create-tag.steps.extract_version_name.outputs.version }}
+          tag: ${{ needs.create-tag.steps.extract_version_name.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
