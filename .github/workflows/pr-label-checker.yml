@@ -4,7 +4,7 @@ on:
     types: [opened, labeled, unlabeled, synchronize]
 jobs:
   check-release-label:
-    if: startsWith(github.head_ref, 'releases/')
+    if: startsWith(github.head_ref, 'release/')
     runs-on: ubuntu-latest
     steps:
       - id: check-labels
@@ -17,7 +17,7 @@ jobs:
           labels: "patch, minor, major"
           add_comment: true
   check-branch-label:
-    if: ${{ !startsWith(github.head_ref , 'releases/') }}
+    if: ${{ !startsWith(github.head_ref , 'release/') }}
     runs-on: ubuntu-latest
     steps:
       - id: check-labels
