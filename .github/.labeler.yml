@@ -14,6 +14,7 @@ labels:
     - '\bchore\b'
   "feature":
     - '\bfeat\b'
+    - '\bfeature\b'
   "bugfix":
     - '\bhotfix\b'
     - '\bfix\b'
