@@ -39,6 +39,7 @@ jobs:
         run: echo "release"
   create-release-note:
     needs: [create-tag, release]
+    runs-on: ubuntu-latest
     if: success()
     steps:
       - name: Publish Release Notes
