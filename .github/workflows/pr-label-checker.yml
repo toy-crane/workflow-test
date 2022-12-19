@@ -14,4 +14,4 @@ jobs:
           mode: exactly
           count: 1
           labels: "patch, minor, major"
-          exit_type: success
+          add_comment: true
