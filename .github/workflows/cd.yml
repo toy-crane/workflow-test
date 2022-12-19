@@ -21,9 +21,19 @@ jobs:
         run: echo "##[set-output name=version;]$(echo '${{ github.event.head_commit.message }}' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
         id: extract_version_name
       - name: validate-tag
-        uses: ./.github/workflows/validate-tag.yml
+        uses: bbonkr/git-tag-check-action@v1.0.5
+        id: git_tag_check
         with:
-          tag_name: ${{ steps.extract_version_name.outputs.version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.extract_version_name.outputs.version }}
+      - name: logging found
+        if: ${{ steps.git_tag_check.outputs.tag != '' }}
+        run: |
+          echo "Found tag=${{ steps.git_tag_check.outputs.tag }}"
+      - name: logging not found
+        if: ${{ steps.git_tag_check.outputs.tag == '' }}
+        run: |
+          echo "Tag does not exist"
   release:
     name: deploy to S3
     runs-on: ubuntu-latest
