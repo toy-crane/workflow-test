@@ -30,6 +30,7 @@ jobs:
         if: ${{ steps.git_tag_check.outputs.tag != '' }}
         run: |
           echo "::error ${{ steps.git_tag_check.outputs.tag }} is already exists"
+          exit 1
   release:
     name: deploy to S3
     needs: create-tag
