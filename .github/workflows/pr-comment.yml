@@ -7,8 +7,10 @@ jobs:
   # /deploy를 코멘트로 감지 시, 배포를 진행
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
-    uses: ./.github/workflows/deploy.yml
-    secrets: inherit
+    steps:
+      -name: deploy
+        uses: ./.github/workflows/deploy.yml
+        secrets: inherit
   pull-request-comment:
     if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
     runs-on: [macos-latest]
