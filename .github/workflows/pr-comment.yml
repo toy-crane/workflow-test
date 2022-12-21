@@ -9,6 +9,7 @@ jobs:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
+    with: ${{github.event.pull_request.head.sha}}
   pull-request-comment:
     if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
     runs-on: [macos-latest]
