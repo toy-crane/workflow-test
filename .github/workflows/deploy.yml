@@ -2,6 +2,10 @@ name: otl-web deploy workflow
 
 on:
   workflow_call:
+    inputs:
+      config-path:
+        required: false
+        sha: string
 
 env:
   AWS_REGION: ap-northeast-2
@@ -17,3 +21,4 @@ jobs:
         id: branch_check
         run: |
           echo "Running on branch ${{ github.ref_name }}"
+          echo "${{ inputs.sha }}"
