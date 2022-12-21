@@ -12,7 +12,10 @@ jobs:
     with:
       sha: ${{github.event.pull_request.head.sha}}
   echo-branch:
-    run: echo ${{github.event.pull_request.head.sha}} ${{github.event.pull_request.head.ref}}
+    runs-on: [macos-latest]
+    steps:
+      - name: echo branch
+        run: echo ${{github.event.pull_request.head.sha}} ${{github.event.pull_request.head.ref}}
   pull-request-comment:
     if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
     runs-on: [macos-latest]
