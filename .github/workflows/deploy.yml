@@ -1,0 +1,19 @@
+name: otl-web deploy workflow
+
+on:
+  workflow_call:
+
+env:
+  AWS_REGION: ap-northeast-2
+
+jobs:
+  # 브랜치명에 따라 environment를 설정하는 job
+  create-environment:
+    name: Create Environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set env vars from dev branch
+        id: branch_check
+        run: |
+          echo "Running on branch ${{ github.ref_name }}"

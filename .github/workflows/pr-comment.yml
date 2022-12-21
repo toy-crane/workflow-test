@@ -1,0 +1,27 @@
+name: Pull request comment
+on:
+  issue_comment:
+    types: [created, edited, deleted]
+
+jobs:
+  # /deploy를 코멘트로 감지 시, 배포를 진행
+  trigger-deploy:
+    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+  pull-request-comment:
+    if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
+    runs-on: [macos-latest]
+    steps:
+      - name: Add deploy comment
+        if: contains(github.event.comment.body, '/deploy') # check the comment if it contains the keywords
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚀'
+            })
