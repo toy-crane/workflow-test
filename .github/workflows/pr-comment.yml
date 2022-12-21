@@ -1,5 +1,7 @@
 name: Pull request comment
 on:
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
   issue_comment:
     types: [created, edited, deleted]
 
@@ -15,7 +17,7 @@ jobs:
     runs-on: [macos-latest]
     steps:
       - name: echo branch
-        run: echo "${{github.event.pull_request.head.sha}} ${{github.event.issue.pull_request.head.ref}} ${{github.event.issue.pull_request}}"
+        run: echo "${{github.event.issue.pull_request}} ${{ github.event.pull_request.head.sha }}"
   pull-request-comment:
     if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
     runs-on: [macos-latest]
