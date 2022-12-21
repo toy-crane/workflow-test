@@ -3,9 +3,9 @@ name: otl-web deploy workflow
 on:
   workflow_call:
     inputs:
-      config-path:
+      sha:
         required: false
-        sha: string
+        type: string
 
 env:
   AWS_REGION: ap-northeast-2
