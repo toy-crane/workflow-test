@@ -6,6 +6,24 @@ on:
     types: [created, edited, deleted]
 
 jobs:
+  get-pr-sha:
+    runs-on: [macos-latest]
+    steps:
+      - name: get-pr-sha
+        id: sha
+        uses: actions/github-script@v4
+        with:
+          result-encoding: string
+          script: |
+            const { owner, repo, number } = context.issue;
+            const pr = await github.pulls.get({
+              owner,
+              repo,
+              pull_number: number,
+            });
+            return pr.data.head.sha
+      - name: echo sha
+        run: echo ${{ steps.sha.outputs.result}}
   # /deploy를 코멘트로 감지 시, 배포를 진행
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
@@ -17,7 +35,7 @@ jobs:
     runs-on: [macos-latest]
     steps:
       - name: echo branch
-        run: echo "${{github.event.issue.pull_request}} ${{ github.event.pull_request.head.sha }}"
+        run: echo " event ${{ github.event.pull_request.head.sha }}" echo "test ${{ github.event.issue.pull_request.head}}"
   pull-request-comment:
     if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
     runs-on: [macos-latest]
