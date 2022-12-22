@@ -23,7 +23,7 @@ jobs:
               repo,
               pull_number: number,
             });
-            return pr.data.head.sha
+            return pr.data.head.ref
   # /deploy를 코멘트로 감지 시, 배포를 진행
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
