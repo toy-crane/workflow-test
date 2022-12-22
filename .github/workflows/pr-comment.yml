@@ -6,8 +6,10 @@ on:
     types: [created, edited, deleted]
 
 jobs:
-  get-pr-sha:
+  get-current-sha:
     runs-on: [macos-latest]
+    outputs:
+      sha: ${{ steps.sha.outputs.result }}
     steps:
       - name: get-pr-sha
         id: sha
@@ -22,33 +24,11 @@ jobs:
               pull_number: number,
             });
             return pr.data.head.sha
-      - name: echo sha
-        run: echo ${{ steps.sha.outputs.result}}
   # /deploy를 코멘트로 감지 시, 배포를 진행
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
+    needs: get-current-sha
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
     with:
-      sha: ${{github.event.pull_request.head.sha}}
-  echo-branch:
-    runs-on: [macos-latest]
-    steps:
-      - name: echo branch
-        run: echo " event ${{ github.event.pull_request.head.sha }}" echo "test ${{ github.event.issue.pull_request.head}}"
-  pull-request-comment:
-    if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
-    runs-on: [macos-latest]
-    steps:
-      - name: Add deploy comment
-        if: contains(github.event.comment.body, '/deploy') # check the comment if it contains the keywords
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '🚀'
-            })
+      sha: ${{needs.get-current-sha.outputs.sha}}
