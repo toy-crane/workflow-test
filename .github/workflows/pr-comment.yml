@@ -27,6 +27,7 @@ jobs:
   # /deploy를 코멘트로 감지 시, 배포를 진행
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
+    runs-on: [macos-latest]
     needs: get-current-sha
     steps:
       - name: Fail randomly
