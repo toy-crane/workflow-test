@@ -30,8 +30,7 @@ jobs:
     needs: get-current-sha
     steps:
     -name: Random Fail
-      run: cat README.md
-        exit $((RANDOM % 2))
+      run: exit $((RANDOM % 2))
 
   # PR comment에 대답하는 job
   pull-request-comment:
