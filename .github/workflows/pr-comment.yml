@@ -23,12 +23,52 @@ jobs:
               repo,
               pull_number: number,
             });
-            return pr.data.head.ref
+            return pr.data.head.
   # /deploy를 코멘트로 감지 시, 배포를 진행
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
     needs: get-current-sha
-    uses: ./.github/workflows/deploy.yml
-    secrets: inherit
-    with:
-      sha: ${{needs.get-current-sha.outputs.sha}}
+    run: 
+        cat README.md
+        exit $((RANDOM % 2))
+
+  # PR comment에 대답하는 job
+  pull-request-comment:
+    if: ${{ github.event.issue.pull_request }} # check if the comments come from pull request, exclude those from issue.
+    runs-on: [macos-latest]
+    needs: trigger-deploy
+    steps:
+      - name: Add deploy comment
+        if: contains(github.event.comment.body, '/deploy') # check the comment if it contains the keywords
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚀 배포가 시작 되었습니다.'
+            })
+        - name: Message success 
+          if: ${{ success() }}
+          uses: actions/github-script@v4
+          with:
+            script: |
+              github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Deployment succeeded! ✅',
+              });
+        - name: Message failure
+          if: ${{ failure() }}
+          uses: actions/github-script@v4
+          with:
+            script: |
+              github.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: 'Deployment failed! ❌',
+              });
