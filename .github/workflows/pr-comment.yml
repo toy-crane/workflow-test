@@ -6,29 +6,10 @@ on:
     types: [created, edited, deleted]
 
 jobs:
-  get-current-sha:
-    runs-on: [macos-latest]
-    outputs:
-      sha: ${{ steps.sha.outputs.result }}
-    steps:
-      - name: get-pr-sha
-        id: sha
-        uses: actions/github-script@v4
-        with:
-          result-encoding: string
-          script: |
-            const { owner, repo, number } = context.issue;
-            const pr = await github.pulls.get({
-              owner,
-              repo,
-              pull_number: number,
-            });
-            return pr.data.head.
   # /deploy를 코멘트로 감지 시, 배포를 진행
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
     runs-on: [macos-latest]
-    needs: get-current-sha
     steps:
       - name: Fail randomly
         run: |
