@@ -28,9 +28,8 @@ jobs:
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
     needs: get-current-sha
-    run: 
-        cat README.md
-        exit $((RANDOM % 2))
+    run: cat README.md
+      exit $((RANDOM % 2))
 
   # PR comment에 대답하는 job
   pull-request-comment:
@@ -50,25 +49,25 @@ jobs:
               repo: context.repo.repo,
               body: '🚀 배포가 시작 되었습니다.'
             })
-        - name: Message success 
-          if: ${{ success() }}
-          uses: actions/github-script@v4
-          with:
-            script: |
-              github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Deployment succeeded! ✅',
-              });
-        - name: Message failure
-          if: ${{ failure() }}
-          uses: actions/github-script@v4
-          with:
-            script: |
-              github.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: 'Deployment failed! ❌',
-              });
+      - name: Message success
+        if: ${{ success() }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Deployment succeeded! ✅',
+            });
+      - name: Message failure
+        if: ${{ failure() }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Deployment failed! ❌',
+            });
