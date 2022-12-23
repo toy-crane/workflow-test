@@ -28,8 +28,9 @@ jobs:
   trigger-deploy:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
     needs: get-current-sha
-    run: cat README.md
-      exit $((RANDOM % 2))
+    steps:
+      run: cat README.md
+        exit $((RANDOM % 2))
 
   # PR comment에 대답하는 job
   pull-request-comment:
