@@ -29,8 +29,10 @@ jobs:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/deploy')
     needs: get-current-sha
     steps:
-    -name: Random Fail
-      run: exit $((RANDOM % 2))
+      - name: Fail randomly
+        run: |
+          cat README.md
+          exit $((RANDOM % 2))
 
   # PR comment에 대답하는 job
   pull-request-comment:
